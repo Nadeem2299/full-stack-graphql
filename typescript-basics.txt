@@ -1,0 +1,77 @@
+Typescript (Strictly typed language)
+---------
+TS= JS + Data typing
+
+Primitive datatypes:
+        ----
+        string, number, boolean, undefined, null, symbol (ES2015), BIGINT (ES2017)
+
+
+Syntax:
+------
+1. Explicit Datatyping
+  var x:number = 10; 
+  x= 200 // valid
+  x = true; // error 
+
+2. Implicit Datatyping / Type inference
+  var y = 20; // also valid (automatically number)
+  y=202; // valid
+  y= true;  // error
+
+
+var z;  // valid (if no value assined it will fall into "any" type)
+z = 10; // valid 
+z = true; // valid
+z = null; // valid
+z = undefined; // valid
+z = []; // valid
+z = {}; // valid
+
+var myName: string = "Nadeem";  
+var isLoggedIn: boolean = false;
+
+var u: undefined;
+var n:null = null;
+var colors: string[] = ['red', 'blue', 'red'];
+var colors: string[] = ['red', 'blue', 'red',23424, true]; //error
+var newColors: Array<string> = ['red', 'blue', 'red'];
+
+var profile: {} = {
+
+}
+
+var profile: {
+  name ?: string, // ? indicates this is optional if not there still it is fine
+  city: string | number
+} = {
+  name: 'Nadeem',
+  city: 'Delhi'
+}
+
+var myName!: string;
+myName= 'Nadeem'
+
+functions-
+
+function add(a: number, b:number): number { 
+  return 10;
+}
+function add(a: number, b:number): void { 
+  // if no return then void
+}
+add(10, 20)
+
+class Car {
+  // public var
+  public make!: string; // writing public is option as it is by default public
+  private: model!: string
+  
+  constructor(make: string, model: string) {
+      this.make = make;
+      this.model = model;
+  }
+}
+
+const myCar: Car = new Car('BMW', '17');
+myCar
