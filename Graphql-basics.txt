@@ -1,0 +1,217 @@
+GraphQL
+-------
+  Problems in REST API
+  -------------------
+  - Overfetching the data from REST API
+  - Underfethcing the data from REST API
+  - Exposing many api end points to Front end
+  - Sharing the REST api docs to the front end developers
+
+
+  Server apps
+  Shell Client (cmd)
+  Desktop client: Client: Browser, Postman, 
+  Programming Cleint: Angular, React, (fetch / axios), vue.js, js apps, svelte
+
+
+GraphQL
+-------
+  Server,
+  Client
+    Shell Client: ...?
+    Web Client: GraphQL
+    Desktop Client: Postman, Altair GraphQL, Client
+    Programming Clients: Appolo Client, Facebook Relay in Angular/React/vuejs apps
+
+=====
+GraphQL apps
+--------
+1. Server side apps by 3 different approaches
+  1.1 GraphQL Server side app in NodeJS
+  1.2 GraphQL Server side app with expressJS + official GraphQL (TO LEARN in a day or 2)
+    1.2.1 using buildSchema approach 
+    1.2.2 using graphQLSchema
+  1.3 GraphQL Server side app with  expressJS + Appolo Server (TO LEARN)
+
+2. Client side app
+  Angular/React/vueJS/svelte App with either Appolo client or Facebook Relay
+
+  What we will develop
+  React App with Appolo Client (TO LEARN)
+
+GraphQL is a language neutral feature/ concept 
+==========
+
+Day 11-
+On the Server side 
+===========
+
+#1 Running GraphQL in a Node.js environment
+    https://graphql.org/graphql-js/
+
+#2 GraphQL API server over an Express webserver. 
+    https://graphql.org/graphql-js/running-an-express-graphql-server/
+
+#3 GraphQL server packages from Apollo that work with 
+    various Node.js HTTP frameworks like Express 
+    https://www.apollographql.com/docs/apollo-server/
+
+
+On the client Side 
+================
+#1 Using Apollo Client  (We will have demo of this one only)
+    A powerful JavaScript GraphQL client, designed to work well with React, 
+    React Native, Angular 2, or just plain JavaScript.
+    http://apollographql.com/client/ 
+
+#2 Using Facebook Relay ( You learn this separately)
+    Facebook's framework for building React applications that 
+    talk to a GraphQL backend.
+    https://facebook.github.io/relay/
+
+TODO: Learn about microservices in backend and frontend
+=============
+
+GraphQL - Query language but not compititor to sequal
+  * In Graphql every thing is strongly-typed
+
+Schema
+======
+  A model for database
+  * Combination of Query and Mutation
+  
+  Types that the Schema can include are,
+    1. Scalar Types
+      Similar to Primitive types 
+      Examples: Int, Float, String, Boolean, ID (unique identifier)
+        Int : A signed 32‐bit integer.
+        Float : A signed double-precision floating-point value.
+        String : A UTF‐8 character sequence.
+        Boolean : true or false .
+        ID : The ID scalar type represents a unique identifier, often used to refetch an object or as the key for a cache.
+
+    2. Object Types
+      * Similar to your own Data type/ Custom Type
+      * Will contain collection of field a.k.a  properties properties
+      * Each field or properties will be of scalar type
+        ex of custom type in TS:
+        // custom data type in TS
+        Type Employee = {
+          name: String,
+          City?: String,
+          address: Address
+        }
+        Type Address = {
+          street: String,
+          houseNo: String
+        }
+        var employee: Employee = {
+          name: 'John',
+          city: 'London',
+          address: Address = {
+            street: 'Abcd',
+            houseNo: '123-Random'
+          }
+        }
+        Ex of Object Type in GraphQL
+        type Book {
+          title: String,
+          genre: String,
+          author: Author
+        }
+        type Author {
+          name:String,
+          bookWritten: Int,
+          bio: String
+        }
+        var book: Book = {
+          title:'The Hobbit',
+          genre:"Fantasy",
+          author: Author = {
+            name:"John",
+            bookWritten: 12,
+            bio:"A great writer"
+          }
+        }
+
+    3. Query Types
+      * Used for READ Operation (GET in REST API) in GraphQL -- (Query)
+      * It defines what graphQL Read Operation executes against your data graph
+      * The return type can be of scalar type or object type
+
+      Examples: 
+      --------
+      type Query{
+        hello: String, // hello is a field or property and String is the return type of hello
+        age: Int,
+        greet(name: String): String {
+          // This function takes one argument as input which will be passed to it from client side
+        }
+      }
+      
+      // From the graphQL clien we can structure the queries like the following
+      {
+        hello,
+        age,
+        greet(name: "John")
+      }
+      // Returned value will be like the following - In the form of JSON
+      {
+        "data": {
+          "Hello": "Hi",
+          "age": 20,
+          "greet": "Hey John"
+        }
+      }
+
+    4. Mutation Types
+      * For CREATE, UPDATE, DELETE Operations in GraphQL
+      Examples:
+      -------
+      type Mutation{
+        addAuthor(name: String, phone: String, booksWritten: Int, bio: String): Author 
+        // Return type is object Id (Custom Type) 
+        updateUserById(id: String): User,
+        deleteUserById(id:String): Status // Custom type
+      }
+      // From GraphQL client -- You can structure the Mutations link the following
+      mutation {
+        addAuthor(name: "Nadeem", penName: "Guddu", booksWritten: 5, bio: "lorem ipsum...."){
+           you can specify the needed fields
+           id 
+        },
+        updateUserById("1"){
+          name,
+          city
+        },
+      } 
+
+      // returned value will be in the form of JSON
+      {
+        "data": {
+          addAuthor: {
+            id: 122132
+          },
+          updateUserById:{
+            name: "Steve",
+            city: "london"
+          }
+        }
+      }
+
+    5. Input Types
+      * Instead of passing many arguments in the above one,
+      we can make a custom type called Input type for it
+
+      * It will be cleaner and optimized
+      Examples: 
+      type Mutation {
+        addAuthor(AuthorInput): Author  
+      }
+
+      input AuthorInput{ // must be defined with Input prefix 
+        name: String, 
+        phone: String, 
+        booksWritten: Int, 
+        bio: String
+      }
