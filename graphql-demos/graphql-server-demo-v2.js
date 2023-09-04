@@ -3,11 +3,11 @@
 
 // Approach #1: Using buildSchema method
 
-const express = require('express');
+const express = require("express");
 // We need express-graphql to run a graphql server
 
-const { graphqlHTTP } =  require('express-graphql');
-const { buildSchema } = require('graphql'); // npm i graphql
+const { graphqlHTTP } = require("express-graphql");
+const { buildSchema } = require("graphql"); // npm i graphql
 // we need to create express app
 const app = express();
 const PORT = 3005;
@@ -20,31 +20,68 @@ const PORT = 3005;
 const schema = buildSchema(`
   """ Here start Schema defination language """
   type Query {
-    hello: String
+    hello: String,
+    age: Int,
+    quoteOfTheDay: String,
+    greet(name: String): String,
+    favMovies: [String],
+    isAuth: Boolean
   }
-`)
+`);
 
 // in order to handle the queries from frontend , we need to create resolver
 // resolver is nothing but a function that returns data froma field
 // resolver function should have same name as field name
 
 const root = {
-  // here's the resolver function for hello field
+  // here's the resolver function for all our queries
   hello: () => {
-    // return the data for the hello field
-    return 'Hello world!';
-  }
+    // return the data for the hello query
+    // here you can make db calls, REST calls etc.
+    return "Hello world!";
+  },
+  age: () => {
+    // return the data for the hello query
+    return 20;
+  },
+  quoteOfTheDay: () => {
+    // return the data for the  quoteOfTheDay query
+    return Math.random() < 0.5 ? "Take it easy" : "Be Happy";
+  },
+  greet: (args) => {
+    console.log(args);
+    return `Hey ${args.name} Good Morning`;
+  },
+  favMovies: () => {
+    // return the data for the array of movies
+    return [
+      "Avengers-0",
+      "Avengers-1",
+      "Avengers-2",
+      "Avengers-3",
+      "Avengers-4",
+    ];
+  },
+  isAuth: () => {
+    // return the data for the isAuth query
+    return true;
+  },
 };
 
 // the only api endpoint frontend should hit
-app.use('/graphql', graphqlHTTP({
-  schema: schema,  // we will add schema here -- it is must
-  rootValue: root,
-  graphiql: true // this will enable the graphiql client tool
-}));
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema, // we will add schema here -- it is must
+    rootValue: root,
+    graphiql: true, // this will enable the graphiql client tool
+  })
+);
 
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}. Open http://localhost:${PORT}/graphql`);
+  console.log(
+    `Server is listening on port ${PORT}. Open http://localhost:${PORT}/graphql`
+  );
 });
 
 // Now we need to start the server -- node graphql-server-demo-v1.js
