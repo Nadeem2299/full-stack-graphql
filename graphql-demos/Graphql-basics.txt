@@ -19,8 +19,8 @@ GraphQL
   Server,
   Client
     Shell Client: ...?
-    Web Client: GraphQL
-    Desktop Client: Postman, Altair GraphQL, Client
+    Web Client: Graphiql
+    Desktop Client: Postman, Altair GraphQL Client
     Programming Clients: Appolo Client, Facebook Relay in Angular/React/vuejs apps
 
 =====
