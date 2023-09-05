@@ -19,15 +19,44 @@ const PORT = 3005;
 
 const schema = buildSchema(`
   """ Here start Schema defination language """
+  type User {
+    id: ID,
+    name: String,
+    phone: String,
+    email: String
+  }
+  
   type Query {
-    hello: String,
+    hello: String!,
     age: Int,
     quoteOfTheDay: String,
     greet(name: String): String,
     favMovies: [String],
-    isAuth: Boolean
+    isAuth: Boolean,
+    user: User,
+    userList(name: String): [User]
+  }
+
+  type Mutation {
+    createUser(name: String, email: String, phone: String): User
   }
 `);
+
+// ! means not nullable it must return a string in hello case
+
+/*
+  For mutation the query should be like the following
+
+  mutation {
+  createUser(name: "Nadeem", phone: "232323", email: "a@b.com") {
+    id
+    name
+    phone
+    email
+  }
+}
+
+*/
 
 // in order to handle the queries from frontend , we need to create resolver
 // resolver is nothing but a function that returns data froma field
@@ -65,6 +94,49 @@ const root = {
   isAuth: () => {
     // return the data for the isAuth query
     return true;
+  },
+  user: () => {
+    return {
+      id: 1,
+      name: "Nadeem",
+      phone: "232323",
+      email: "n@k.com",
+    };
+  },
+  userList: (args) => {
+    console.log(args.name);
+    const users = [
+      {
+        id: 1,
+        name: "Nadeem",
+        phone: "232323",
+        email: "n@k.com",
+      },
+      {
+        id: 2,
+        name: "Nadeem",
+        phone: "23232323",
+        email: "n@ak.com",
+      },
+    ];
+    // Using js find agrs.id as matching with the users array
+    const matchingUsers = users.filter((user) => {
+      if (user.name == args.name) return user;
+    });
+    return matchingUsers;
+  },
+  createUser: ({ name, email, phone }) => {
+    console.log(name);
+    console.log(email);
+    console.log(phone);
+
+    const newUser = {
+      id: 999,
+      name,
+      email,
+      phone,
+    };
+    return newUser;
   },
 };
 

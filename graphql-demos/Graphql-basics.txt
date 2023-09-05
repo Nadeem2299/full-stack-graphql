@@ -81,7 +81,7 @@ Schema
   * Combination of Query and Mutation
   
   Types that the Schema can include are,
-    1. Scalar Types
+    1. Scalar Types [Done]
       Similar to Primitive types 
       Examples: Int, Float, String, Boolean, ID (unique identifier)
         Int : A signed 32‐bit integer.
@@ -90,7 +90,7 @@ Schema
         Boolean : true or false .
         ID : The ID scalar type represents a unique identifier, often used to refetch an object or as the key for a cache.
 
-    2. Object Types
+    2. Object Types [Done]
       * Similar to your own Data type/ Custom Type
       * Will contain collection of field a.k.a  properties properties
       * Each field or properties will be of scalar type
@@ -134,7 +134,7 @@ Schema
           }
         }
 
-    3. Query Types
+    3. Query Types [Done]
       * Used for READ Operation (GET in REST API) in GraphQL -- (Query)
       * It defines what graphQL Read Operation executes against your data graph
       * The return type can be of scalar type or object type
