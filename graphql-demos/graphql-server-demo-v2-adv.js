@@ -38,7 +38,9 @@ const schema = buildSchema(`
   }
 
   type Mutation {
-    createUser(name: String, email: String, phone: String): User
+    createUser(name: String!, email: String!, phone: String!): User!
+    updateUserById(id: Int!, name: String!, email: String!, phone: String!): User
+    deleteUserById(id: Int!): String
   }
 `);
 
@@ -138,6 +140,20 @@ const root = {
     };
     return newUser;
   },
+  updateUserById: ({ id, name, email, phone }) => {
+    console.log(id);
+    const updatedUser = {
+      id,
+      name,
+      email,
+      phone
+    }
+    return updatedUser;
+  },
+  deleteUserById: ({id}) => {
+    console.log(id);
+    return "deleted successfully"
+  }
 };
 
 // the only api endpoint frontend should hit

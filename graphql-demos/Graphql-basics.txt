@@ -206,7 +206,7 @@ Schema
       * It will be cleaner and optimized
       Examples: 
       type Mutation {
-        addAuthor(AuthorInput): Author  
+        addAuthor(author: AuthorInput): Author  
       }
 
       input AuthorInput{ // must be defined with Input prefix 

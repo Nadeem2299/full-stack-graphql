@@ -1,3 +1,5 @@
+// Approach #1: Using buildSchema method
+
 // Let's setup grapiql client tool to test our graphql server
 
 // What is GraphiQL?

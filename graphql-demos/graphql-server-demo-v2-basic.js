@@ -1,7 +1,7 @@
+// Approach #1: Using buildSchema method
+
 // lets learn ablout building schema for Graphql server
 // along with setting up graphiql client tool to test our graphql server
-
-// Approach #1: Using buildSchema method
 
 const express = require("express");
 // We need express-graphql to run a graphql server
