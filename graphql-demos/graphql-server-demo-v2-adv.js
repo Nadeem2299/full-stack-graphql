@@ -3,6 +3,7 @@
 
 // Approach #1: Using buildSchema method
 
+const { query } = require("express");
 const express = require("express");
 // We need express-graphql to run a graphql server
 
@@ -37,13 +38,29 @@ const schema = buildSchema(`
     userList(name: String): [User]
   }
 
+  input UserInput {
+    name: String,
+    email: String,
+    phone: String
+  }
+
   type Mutation {
-    createUser(name: String!, email: String!, phone: String!): User!
+    createUser(input: UserInput): User!
     updateUserById(id: Int!, name: String!, email: String!, phone: String!): User
     deleteUserById(id: Int!): String
   }
 `);
-
+/*
+query
+mutation {
+  createUser(input: {name: "Nadeem", phone: "232323", email: "a@b.com"}) {
+    id
+    name
+    phone
+    email
+  }
+}
+/*
 // ! means not nullable it must return a string in hello case
 
 /*
@@ -127,16 +144,16 @@ const root = {
     });
     return matchingUsers;
   },
-  createUser: ({ name, email, phone }) => {
-    console.log(name);
-    console.log(email);
-    console.log(phone);
+  createUser: (args) => {
+    console.log(args.input.name);
+    console.log(args.input.email);
+    console.log(args.input.phone);
 
     const newUser = {
       id: 999,
-      name,
-      email,
-      phone,
+      name: args.input.name,
+      email: args.input.email,
+      phone: args.input.phone,
     };
     return newUser;
   },

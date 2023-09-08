@@ -1,0 +1,7 @@
+setup apollo server Project
+1. npm init -y
+2. npm i @apollo/server express graphql cors body-parser //(connecting frontend with server cors is required)
+// cors= cross origin resourse sharing
+3. npm i express-jwt jsonwebtoken (for login signup) 
+
+
