@@ -3,5 +3,51 @@ setup apollo server Project
 2. npm i @apollo/server express graphql cors body-parser //(connecting frontend with server cors is required)
 // cors= cross origin resourse sharing
 3. npm i express-jwt jsonwebtoken (for login signup) 
+4. setup server.js
+5. setup schema by adding resolvers.js and schema.graphql
 
 
+Couse plan:
+----------
+  Connecting to REST API [Done]
+  Connecting to database (Mongodb)-
+  ------
+    MongoDB 
+      Driver + ORM
+        Mongoose
+      database model
+
+  Documentation
+  Mutaion
+
+  Aliases-- [Done]
+  query Query {
+    greet: hello
+  }
+
+  {
+    "data": {
+      "greet": "Hello World"
+    }
+  }
+  data stored in hello will be come for greet
+  Debugging- Server Apps
+  Fragments (TODO:)
+
+  Authentication
+  connecting to reqses.in
+  Handling Errors
+
+
+  Client Projects- React Project
+  Connecting to graphql server and getting the database
+  Authentication
+
+
+  caching
+
+  Pagination
+  Subscription
+
+  ---
+  Typescript based Project
