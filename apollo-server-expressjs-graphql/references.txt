@@ -17,8 +17,8 @@ Couse plan:
         Mongoose
       database model
 
-  Documentation
-  Mutaion
+  Documentation [Done]
+  Mutaion [Done]
 
   Aliases-- [Done]
   query Query {
@@ -46,8 +46,10 @@ Couse plan:
 
   caching
 
-  Pagination
+  Pagination [6-SEPT]
+  TODO: learn WebSocket, SocketIO and Subscription by your own
   Subscription
 
   ---
   Typescript based Project
+

@@ -1,0 +1,80 @@
+Refer: https://www.apollographql.com/docs/react/get-started
+
+Step 1
+----
+  npm install @apollo/client graphql
+
+Step 2: 
+------
+  Initialize ApolloClient in index.js 
+  
+  import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+
+  const client = new ApolloClient({
+    uri: 'http://localhost:9000/graphql',
+    cache: new InMemoryCache(),
+  });
+
+Step 3:
+-------
+  Then wrap App comp inside ApolloClient
+
+  <ApolloProvider client={client}>
+    <App/>
+  </ApolloClient>
+
+
+Step 4:
+-----
+  then, from the desired component connect to graphql server 
+
+  import React from "react";
+  import { Link } from "react-router-dom";
+  import { useQuery, gql } from "@apollo/client";   <==
+
+  const PostsPage = () => {
+    const GET_POSTS = gql`    <==
+      query PostsQuery {
+        posts {
+          id
+          title
+          body
+        }
+      }
+    `;
+
+    const { loading, error, data } = useQuery(GET_POSTS);  <==
+
+    if (loading) return <p>Loading...</p>;   <==
+    if (error) return <p>Error : {error.message}</p>;  <==
+
+    return (
+      <div className="row">
+        <h1>Posts</h1>
+
+        {data.posts?.map((post) => {    <==
+          return (
+            <div className="col-md-4" key={post.id}>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">{post.title}</h5>
+                  <h6 className="card-subtitle mb-2 text-body-secondary">
+                    #{post.id}
+                  </h6>
+                  <p className="card-text">{post.body}</p>
+                  <Link to={`/posts/${post.id}`} className="card-link">
+                    View Post
+                  </Link>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  export default PostsPage;
+
+
+

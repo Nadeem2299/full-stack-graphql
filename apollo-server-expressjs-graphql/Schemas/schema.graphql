@@ -26,5 +26,6 @@ type User {
 # let us try mutation now - for createPost, updatePost, deletePost
 type Mutation {
   createPost (title :String! ,body: String!) : Post,
-  updatePost(id: Int!, title: String!, body: String!): Post
+  updatePost(id: Int!, title: String!, body: String!): Post,
+   deletePost(id: Int!): String
 }
