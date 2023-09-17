@@ -46,10 +46,58 @@ Couse plan:
 
   caching
 
-  Pagination [6-SEPT]
-  TODO: learn WebSocket, SocketIO and Subscription by your own
+  Pagination [6-SEPT]-
+  Pagination
+=======
+  Types 
+
+  1. Offset Pagination
+      Disadv 
+      ---
+        after first set of result is loaded if new item is added in db, 
+        offset will show previous displayed result also 
+
+
+  2. Cursor Pagination (Recommended)
+      Cursor pagination is a common technique to paginate data in GraphQL APIs.
+      It involves using a "cursor" value to indicate the position in the dataset, 
+      which the client can pass to the server to fetch the next page of results.
+      TODO: learn about node adjust
+
+
+  TODO: learn WebSocket, SocketIO also WebRTC and Subscription by your own
   Subscription
+  Publisher
+  =>1
+    =>2
+      =>10
+  Subscriber
+  =>1
+    =>2
+      =>10
+
+  1. Simplex 
+  example: Radio
+  sender => receiver  
+
+2. Half Duplex 
+    example: Walkie Talkie, Http 
+    sender ==> receiver 
+    sender <== receiver 
+
+    sender ==> receiver 
+    sender <== receiver 
+
+3. Full Duplex 
+    examples: Telephone, WebSocket
+    sender <=> receiver
+
 
   ---
   Typescript based Project
 
+TODO: learn about union and interfaces
+1. caching, authentication & autherization
+2. learn about jenkins, docker, aws for hosting apps
+3. testing graphql api with Jest and other tools
+Prereq. Testing react apps using jest or testing NODEJs apps using JEST or Mocha/Chai

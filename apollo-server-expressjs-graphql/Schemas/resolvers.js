@@ -2,6 +2,23 @@ import axios from "axios";
 import { GraphQLError } from "graphql";
 // connecting to mongoDb and specific connection (table)
 // import Users from '../models/users.model.js';
+import { PubSub } from "graphql-subscriptions";
+
+const pubSub = new PubSub();
+
+function startReportGeneration(name) {
+  console.log(name);
+  setTimeout( () => {
+    console.log('WILL PUBLISH ONCE REPORT READY');
+    pubSub.publish("REPORT_GENERATED", {
+      reportGenerated: {
+        id: Math.floor(Math.random() * 10000).toString(),
+        name: name,
+        createdOn: new Date().toString(),
+      }
+    });
+  }, 5000);
+}
 
 export const resolvers = {
   Query: {
@@ -44,25 +61,31 @@ export const resolvers = {
       console.log(parent);
       console.log(args);
       try {
-      const result = await axios.get(
-        `https://jsonplaceholder.typicode.com/posts/${args.id}`
-      );
-      console.log(result);
-      return result.data;
+        const result = await axios.get(
+          `https://jsonplaceholder.typicode.com/posts/${args.id}`
+        );
+        console.log(result);
+        return result.data;
       } catch (err) {
         throw new GraphQLError("No Posts found with id: " + args.id, {
-          extensions:{code:"NO_POSTS"}
+          extensions: { code: "NO_POSTS" },
         });
       }
     },
-    // users: async () => {
-    //   // connect to db
-    //   const result = await Users.find();
-    //   console.log("=====Users Found=======")
-    //   console.log(result);
-    //   // exec db query as per mongoose syntax
-    //   // get the data and return
-    //   return result;
+    //   users: async (_, { limit, cursor }) => {
+    //     console.log(limit);
+    //     console.log(cursor);
+    //     // exec db query as per mongoose syntax
+    //     const dbQuery = cursor ? { _id: { $gt: cursor } } : {};
+    //     const result = await Users.find(dbQuery)
+    //       .sort({ _id: 1 })
+    //       .limit(limit)
+    //       .exec();
+    //     // console.log("========FOUND USERS =========");
+    //     // console.log(result);
+    //     // get the data and return
+    //     return result;
+    //   },
     // }
   },
   Mutation: {
@@ -89,6 +112,20 @@ export const resolvers = {
         "https://jsonplaceholder.typicode.com/posts/" + args.id
       );
       return "Deleted Successfuly";
+    },
+    generateReport: async (_, { name }) => {
+      console.log(name);
+      startReportGeneration(name);
+
+      return `Your report for ${name} is getting generated. Please wait... We will update you once it is ready!`;
+    },
+  },
+  Subscription: {
+    reportGenerated: {
+      subscribe: () => {
+        // async iterator
+        return pubSub.asyncIterator(["REPORT_GENERATED"]);
+      },
     },
   },
 };

@@ -14,7 +14,7 @@ const PostsPage = () => {
   `;
 
   const { loading, error, data } = useQuery(GET_POSTS, {
-    // fetchPolicy: "network-only", // Used for first execution
+    fetchPolicy: "network-only", // Used for first execution
     // nextFetchPolicy: "cache-first", // Used for subsequent executions
   });
 
